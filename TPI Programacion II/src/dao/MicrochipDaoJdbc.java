@@ -88,16 +88,30 @@ public class MicrochipDaoJdbc implements GenericDao<Microchip> {
 
     @Override
     public void eliminar(long id) {
-        String sql = "DELETE FROM microchip WHERE id=?";
+        String sql = "UPDATE microchip SET eliminado = TRUE WHERE id=?";
         try (Connection c = DatabaseConnection.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
+
             ps.setLong(1, id);
             ps.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException("Error al eliminar microchip", e);
         }
     }
 
-    // Métodos con Connection (para transacciones)
+    public void recuperar(long id) {
+        String sql = "UPDATE microchip SET eliminado = FALSE WHERE id=?";
+        try (Connection c = DatabaseConnection.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
+
+            ps.setLong(1, id);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al recuperar microchip", e);
+        }
+    }
+
+    // Métodos con Connection
     @Override
     public void actualizar(Microchip m, Connection c) {
         String sql = "UPDATE microchip SET codigo=?, fecha_implantacion=?, veterinaria=?, observaciones=?, eliminado=? WHERE id=?";
@@ -116,7 +130,7 @@ public class MicrochipDaoJdbc implements GenericDao<Microchip> {
 
     @Override
     public void eliminar(long id, Connection c) {
-        String sql = "DELETE FROM microchip WHERE id=?";
+        String sql = "UPDATE microchip SET eliminado = TRUE WHERE id=?";
         try (PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setLong(1, id);
             ps.executeUpdate();
@@ -153,6 +167,16 @@ public class MicrochipDaoJdbc implements GenericDao<Microchip> {
             throw new RuntimeException("Error al listar microchips (transaccional)", e);
         }
         return lista;
+    }
+
+    public void recuperar(long id, Connection c) {
+        String sql = "UPDATE microchip SET eliminado = FALSE WHERE id=?";
+        try (PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setLong(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al recuperar microchip (transaccional)", e);
+        }
     }
 
     // Método auxiliar para mapear ResultSet a objeto

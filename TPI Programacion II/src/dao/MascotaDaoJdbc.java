@@ -113,12 +113,26 @@ public class MascotaDaoJdbc implements GenericDao<Mascota> {
 
     @Override
     public void eliminar(long id) {
-        String sql = "DELETE FROM mascota WHERE id=?";
+        String sql = "UPDATE mascota SET eliminado = TRUE WHERE id=?";
         try (Connection c = DatabaseConnection.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
+
             ps.setLong(1, id);
             ps.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException("Error al eliminar mascota", e);
+        }
+    }
+
+    public void recuperar(long id) {
+        String sql = "UPDATE mascota SET eliminado = FALSE WHERE id=?";
+        try (Connection c = DatabaseConnection.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
+
+            ps.setLong(1, id);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al recuperar mascota", e);
         }
     }
 
@@ -171,7 +185,7 @@ public class MascotaDaoJdbc implements GenericDao<Mascota> {
 
     @Override
     public void eliminar(long id, Connection c) {
-        String sql = "DELETE FROM mascota WHERE id=?";
+        String sql = "UPDATE mascota SET eliminado = TRUE WHERE id=?";
         try (PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setLong(1, id);
             ps.executeUpdate();
@@ -198,4 +212,13 @@ public class MascotaDaoJdbc implements GenericDao<Mascota> {
         }
     }
 
+    public void recuperar(long id, Connection c) {
+        String sql = "UPDATE mascota SET eliminado = FALSE WHERE id=?";
+        try (PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setLong(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al recuperar mascota (transaccional)", e);
+        }
+    }
 }
