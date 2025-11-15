@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public final class DatabaseConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/vet";
     private static final String USER = "root";
-    private static final String PASS = "andy123!";
+    private static final String PASS = "";
 
     static {
         try {
@@ -18,7 +18,7 @@ public final class DatabaseConnection {
             throw new RuntimeException("Error: No se encontró el driver JDBC.", e);
         }
     }
-
+    
    /** private DatabaseConnection() { }
 
     public static Connection getConnection() throws SQLException {
@@ -33,7 +33,7 @@ public final class DatabaseConnection {
      */
     public static Connection getConnection() throws SQLException {
         // Validación adicional para asegurarse de que las credenciales no estén vacías
-        if (URL == null || URL.isEmpty() || USER == null || USER.isEmpty() || PASS == null || PASS.isEmpty()) {
+        if (URL == null || URL.isEmpty() || USER == null || USER.isEmpty()) {
             throw new SQLException("Configuración de la base de datos incompleta o inválida.");
         }
         return DriverManager.getConnection(URL, USER, PASS);
