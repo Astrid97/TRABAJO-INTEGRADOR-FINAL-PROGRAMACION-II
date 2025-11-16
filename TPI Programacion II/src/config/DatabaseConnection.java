@@ -19,13 +19,6 @@ public final class DatabaseConnection {
         }
     }
     
-   /** private DatabaseConnection() { }
-
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASS);
-    }
-    
-    **/
         /**
      * 🔹 Método para obtener una conexión a la base de datos.
      * @return Connection si la conexión es exitosa.
