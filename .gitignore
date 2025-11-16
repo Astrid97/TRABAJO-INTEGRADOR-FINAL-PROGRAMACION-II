@@ -1,2 +1,4 @@
-/Entities/nbproject/private/
-/Entities/build/
+/build/
+/nbproject/private/
+/*.class
+
