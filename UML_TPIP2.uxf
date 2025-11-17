@@ -1,0 +1,188 @@
+<diagram program="umletino" version="15.1"><zoom_level>3</zoom_level><element><id>UMLPackage</id><coordinates><x>285</x><y>324</y><w>174</w><h>138</h></coordinates><panel_attributes>config</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>582</x><y>525</y><w>333</w><h>321</h></coordinates><panel_attributes>entities</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>831</x><y>267</y><w>198</w><h>174</h></coordinates><panel_attributes>service</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>1071</x><y>309</y><w>243</w><h>243</h></coordinates><panel_attributes>main</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>291</x><y>366</y><w>75</w><h>33</h></coordinates><panel_attributes>DatabaseConnection
+&lt;&lt;utility&gt;&gt;
+--
+{static} + getConnection(): Connection</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>597</x><y>651</y><w>117</w><h>156</h></coordinates><panel_attributes>Mascota
+--
+- nombre: String
+- especie: String
+- raza: String
+- fechaNacimiento: LocalDate
+- duenio: String
+- microchip: Microchip
+--
++ Mascota()
++ Mascota(id: Long, nombre: String, especie: String, raza: String,
+  fechaNacimiento: LocalDate, duenio: String, microchip: Microchip,
+  eliminado: Boolean)
++ getId(): Long
++ setId(id: Long): void
++ getEliminado(): Boolean
++ isEliminado(): boolean
++ setEliminado(eliminado: Boolean): void
++ getNombre(): String
++ setNombre(nombre: String): void
++ getEspecie(): String
++ setEspecie(especie: String): void
++ getRaza(): String
++ setRaza(raza: String): void
++ getFechaNacimiento(): LocalDate
++ setFechaNacimiento(fecha: LocalDate): void
++ getDuenio(): String
++ setDuenio(duenio: String): void
++ getMicrochip(): Microchip
++ setMicrochip(m: Microchip): void
++ toString(): StringBase
+&lt;&lt; abstract &gt;&gt;
+--
+- id:
+- isEliminado()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>774</x><y>663</y><w>117</w><h>114</h></coordinates><panel_attributes>Microchip
+--
+- codigo: String
+- fechaImplantacion: LocalDate
+- veterinaria: String
+- observaciones: String
+--
++ Microchip()
++ Microchip(id: Long, codigo: String, fechaImplantacion: LocalDate,
+  veterinaria: String, observaciones: String, eliminado: Boolean)
++ getId(): Long
++ setId(id: Long): void
++ getEliminado(): Boolean
++ isEliminado(): boolean
++ setEliminado(eliminado: Boolean): void
++ getCodigo(): String
++ setCodigo(codigo: String): void
++ getFechaImplantacion(): LocalDate
++ setFechaImplantacion(fecha: LocalDate): void
++ getVeterinaria(): String
++ setVeterinaria(veterinaria: String): void
++ getObservaciones(): String
++ setObservaciones(observaciones: String): void
++ toString(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>513</x><y>369</y><w>96</w><h>45</h></coordinates><panel_attributes>MascotaDaoJdbc
+--
++ crear(m: Mascota): Mascota
++ leer(id: long): Optional&lt;Mascota&gt;
++ leerTodos(): List&lt;Mascota&gt;
++ actualizar(m: Mascota): void
++ eliminar(id: long): void
++ crear(m: Mascota, c: Connection): Mascota
++ actualizar(m: Mascota, c: Connection): void
++ eliminar(id: long, c: Connection): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>645</x><y>369</y><w>96</w><h>45</h></coordinates><panel_attributes>MicrochipDaoJdbc
+--
++ crear(mc: Microchip): Microchip
++ leer(id: long): Optional&lt;Microchip&gt;
++ leerTodos(): List&lt;Microchip&gt;
++ actualizar(mc: Microchip): void
++ eliminar(id: long): void
++ crear(mc: Microchip, c: Connection): Microchip
++ actualizar(mc: Microchip, c: Connection): void
++ eliminar(id: long, c: Connection): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>885</x><y>285</y><w>96</w><h>51</h></coordinates><panel_attributes>GenericService&lt;T&gt;
+&lt;&lt;interface&gt;&gt;
+--
++ insertar(entidad: T): T
++ actualizar(entidad: T): void
++ eliminar(id: long): void
++ getById(id: long): Optional&lt;T&gt;
++ getAll(): List&lt;T&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>843</x><y>366</y><w>81</w><h>42</h></coordinates><panel_attributes>MascotaService
+--
+- mascotaDao: MascotaDaoJdbc
+- microchipDao: MicrochipDaoJdbc
+--
++ insertar(m: Mascota): Mascota
++ actualizar(m: Mascota): void
++ eliminar(id: long): void
++ getById(id: long): Optional&lt;Mascota&gt;
++ getAll(): List&lt;Mascota&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>936</x><y>369</y><w>81</w><h>39</h></coordinates><panel_attributes>MicrochipService
+--
+- microchipDao: MicrochipDaoJdbc
+--
++ insertar(mc: Microchip): Microchip
++ actualizar(mc: Microchip): void
++ eliminar(id: long): void
++ getById(id: long): Optional&lt;Microchip&gt;
++ getAll(): List&lt;Microchip&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1101</x><y>342</y><w>60</w><h>48</h></coordinates><panel_attributes>AppMenu
+-----------------------------------------
+- scanner: Scanner
+- menuHandler: MenuHandler
+-----------------------------------------
++ AppMenu()
++ run(): void
+- processOption(opcion: int): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1095</x><y>495</y><w>54</w><h>21</h></coordinates><panel_attributes>Main
+--
++ main(args: String[]): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLNote</id><coordinates><x>696</x><y>813</y><w>126</w><h>24</h></coordinates><panel_attributes>Relación 1→1 garantizada en la base con:
+- FK única en microchip(mascota_id)
+- ON DELETE CASCADE</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>582</x><y>288</y><w>96</w><h>54</h></coordinates><panel_attributes>GenericDao&lt;T&gt;
+&lt;&lt;interface&gt;&gt;
+--
++ crear(entidad: T): T
++ leer(id: long): Optional&lt;T&gt;
++ leerTodos(): List&lt;T&gt;
++ actualizar(entidad: T): void
++ eliminar(id: long): void
+--
++ crear(entidad: T, c: Connection): T
++ actualizar(entidad: T, c: Connection): void
++ eliminar(id: long, c: Connection): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>495</x><y>264</y><w>270</w><h>171</h></coordinates><panel_attributes>dao</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>711</x><y>735</y><w>69</w><h>12</h></coordinates><panel_attributes>lt=-&gt;
+m1=1
+m2=1</panel_attributes><additional_attributes>10;10;210;10</additional_attributes></element><element><id>Relation</id><coordinates><x>537</x><y>312</y><w>51</w><h>63</h></coordinates><panel_attributes>lt=&lt;&lt;.
+&lt;&lt;implements&gt;&gt;</panel_attributes><additional_attributes>150;10;10;10;10;190</additional_attributes></element><element><id>Relation</id><coordinates><x>675</x><y>309</y><w>72</w><h>66</h></coordinates><panel_attributes>lt=&lt;&lt;.
+&lt;&lt;implements&gt;&gt;</panel_attributes><additional_attributes>10;20;190;20;190;200</additional_attributes></element><element><id>Relation</id><coordinates><x>978</x><y>303</y><w>54</w><h>72</h></coordinates><panel_attributes>lt=&lt;&lt;.
+&lt;&lt;implements&gt;&gt;</panel_attributes><additional_attributes>10;10;80;10;80;220</additional_attributes></element><element><id>Relation</id><coordinates><x>843</x><y>303</y><w>48</w><h>69</h></coordinates><panel_attributes>lt=&lt;&lt;.
+&lt;&lt;implements&gt;&gt;</panel_attributes><additional_attributes>140;10;10;10;10;210</additional_attributes></element><element><id>Relation</id><coordinates><x>342</x><y>294</y><w>159</w><h>36</h></coordinates><panel_attributes>lt=&lt;..
+uses</panel_attributes><additional_attributes>10;100;10;20;510;20</additional_attributes></element><element><id>Relation</id><coordinates><x>633</x><y>432</y><w>15</w><h>99</h></coordinates><panel_attributes>lt=&lt;..
+uses</panel_attributes><additional_attributes>10;310;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>723</x><y>432</y><w>15</w><h>105</h></coordinates><panel_attributes>lt=&lt;..
+uses</panel_attributes><additional_attributes>10;10;10;330</additional_attributes></element><element><id>Relation</id><coordinates><x>762</x><y>342</y><w>75</w><h>12</h></coordinates><panel_attributes>lt=&lt;..
+uses</panel_attributes><additional_attributes>10;20;230;20</additional_attributes></element><element><id>Relation</id><coordinates><x>855</x><y>438</y><w>84</w><h>99</h></coordinates><panel_attributes>lt=&lt;..
+uses</panel_attributes><additional_attributes>10;310;10;180;260;180;260;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1026</x><y>351</y><w>51</w><h>12</h></coordinates><panel_attributes>lt=&lt;..
+uses</panel_attributes><additional_attributes>10;20;150;20</additional_attributes></element><element><id>Relation</id><coordinates><x>1107</x><y>387</y><w>15</w><h>114</h></coordinates><panel_attributes>lt=&lt;..
+uses</panel_attributes><additional_attributes>10;10;10;360</additional_attributes></element><element><id>UMLClass</id><coordinates><x>372</x><y>360</y><w>75</w><h>54</h></coordinates><panel_attributes>TransactionManager
+&lt;&lt;utility&gt;&gt;
+--
+
+- conn: Connection
+- transactionActive : boolean
+
+--
++ startTransaction()
++ commit()
++ rollback()
++ close()
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1206</x><y>336</y><w>84</w><h>96</h></coordinates><panel_attributes>MenuHandler
+---------------------------------------------------------------
+- scanner: Scanner
+- mascotaService: MascotaService
+- microchipService: MicrochipService
+---------------------------------------------------------------
++ MenuHandler(scanner: Scanner,
+              mascotaService: MascotaService,
+              microchipService: MicrochipService)
+
++ crearMascota(): void
++ listarMascotas(): void
++ buscarMascotaPorId(): void
++ actualizarMascota(): void
++ eliminarMascota(): void
+
++ agregarMicrochipAMascota(): void
++ actualizarMicrochip(): void
++ buscarMicrochipPorId(): void
++ eliminarMicrochip(): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1173</x><y>495</y><w>54</w><h>21</h></coordinates><panel_attributes>MenuDisplay
+«utility»
+------------------------------
++ mostrarMenuPrincipal(): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1158</x><y>366</y><w>54</w><h>9</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;160;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1137</x><y>387</y><w>69</w><h>114</h></coordinates><panel_attributes>lt=&lt;..
+uses</panel_attributes><additional_attributes>210;360;210;220;10;220;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1014</x><y>393</y><w>198</w><h>12</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;20;640;20</additional_attributes></element><element><id>Relation</id><coordinates><x>906</x><y>405</y><w>306</w><h>21</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;10;10;50;1000;50</additional_attributes></element><element><id>Relation</id><coordinates><x>717</x><y>405</y><w>270</w><h>27</h></coordinates><panel_attributes></panel_attributes><additional_attributes>880;10;880;70;10;70;10;30</additional_attributes></element><element><id>Relation</id><coordinates><x>738</x><y>375</y><w>111</w><h>12</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;20;350;20</additional_attributes></element><element><id>Relation</id><coordinates><x>558</x><y>405</y><w>330</w><h>51</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;30;10;150;1080;150;1080;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>714</x><y>564</y><w>84</w><h>54</h></coordinates><panel_attributes>Base
+&lt;&lt;abstract&gt;&gt;
+-------------------------
+- id: Long
+- eliminado: Boolean
+-------------------------
++ getId(): Long
++ setId(id: Long): void
++ isEliminado(): Boolean
++ setEliminado(eliminado: Boolean): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>795</x><y>585</y><w>54</w><h>84</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;160;10;160;260</additional_attributes></element><element><id>Relation</id><coordinates><x>651</x><y>585</y><w>69</w><h>72</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>210;10;10;10;10;220</additional_attributes></element><element><id>Relation</id><coordinates><x>321</x><y>225</y><w>933</w><h>147</h></coordinates><panel_attributes>lt=&lt;..
+uses</panel_attributes><additional_attributes>10;470;10;20;3090;20;3090;370</additional_attributes></element><element><id>Relation</id><coordinates><x>414</x><y>249</y><w>861</w><h>117</h></coordinates><panel_attributes>lt=&lt;..
+uses</panel_attributes><additional_attributes>10;370;10;20;2850;20;2850;290</additional_attributes></element></diagram>
