@@ -9,6 +9,20 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * Implementación JDBC del DAO para la entidad Mascota.
+ *
+ * Esta clase es responsable de todas las operaciones de acceso a datos
+ * relacionadas con la tabla "mascota".
+ *
+ * Responsabilidades:
+ * - Ejecutar operaciones CRUD sobre mascotas.
+ * - Manejar conexiones, sentencias y ResultSet.
+ * - Mapear datos de la base a objetos de dominio.
+ * - Gestionar la relación con Microchip mediante MicrochipDaoJdbc.
+ * - Proveer versiones transaccionales de los métodos cuando reciben Connection.
+ */
+
+/**
  *
  * @author emlav
  */
