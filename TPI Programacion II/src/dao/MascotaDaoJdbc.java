@@ -11,26 +11,13 @@ import java.sql.*;
 import java.util.*;
 
 /**
- * Implementación JDBC del DAO para la entidad Mascota.
  *
- * Esta clase se encarga de realizar todas las operaciones CRUD contra la base
- * de datos utilizando JDBC.
- *
- * Incluye dos versiones de cada método: - una que maneja su propia conexión -
- * una transaccional que recibe un Connection externo
- *
- * También implementa borrado lógico mediante el campo "eliminado".
+ * @author emlav
  */
 public class MascotaDaoJdbc implements GenericDao<Mascota> {
 
-    /**
-     * Necesitamos microchip para relacionarlo.
-     */
     private final MicrochipDaoJdbc microchipDao = new MicrochipDaoJdbc();
 
-    /**
-     * Crear una mascota usando una conexión propia.
-     */
     @Override
     public Mascota crear(Mascota m) {
         try (Connection c = DatabaseConnection.getConnection()) {
@@ -40,9 +27,31 @@ public class MascotaDaoJdbc implements GenericDao<Mascota> {
         }
     }
 
-    /**
-     * Buscar una mascota usando una conexión propia.
-     */
+    @Override
+    public Mascota crear(Mascota m, Connection c) {
+        String sql = "INSERT INTO mascota (nombre, especie, raza, fecha_nacimiento, duenio, eliminado, microchip_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, m.getNombre());
+            ps.setString(2, m.getEspecie());
+            ps.setString(3, m.getRaza());
+            ps.setDate(4, java.sql.Date.valueOf(m.getFechaNacimiento()));
+            ps.setString(5, m.getDuenio());
+            ps.setBoolean(6, m.isEliminado());
+            ps.setLong(7, m.getMicrochip().getId());
+            ps.executeUpdate();
+
+            // Obtener el ID generado
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    m.setId(rs.getLong(1));
+                }
+            }
+            return m;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al insertar mascota", e);
+        }
+    }
+
     @Override
     public Optional<Mascota> leer(long id) {
         String sql = "SELECT m.*, m.microchip_id FROM mascota m WHERE m.id = ? AND eliminado = FALSE";
@@ -71,9 +80,6 @@ public class MascotaDaoJdbc implements GenericDao<Mascota> {
         return Optional.empty();
     }
 
-    /**
-     * Listar las mascotas usando una conexión propia.
-     */
     @Override
     public List<Mascota> leerTodos() {
         List<Mascota> lista = new ArrayList<>();
@@ -130,9 +136,6 @@ public class MascotaDaoJdbc implements GenericDao<Mascota> {
         return lista;
     }
 
-    /**
-     * Actualizar una mascota usando una conexión propia.
-     */
     @Override
     public void actualizar(Mascota m) {
         String sql = "UPDATE mascota SET nombre=?, especie=?, raza=?, fecha_nacimiento=?, duenio=?, eliminado=? WHERE id=?";
@@ -150,9 +153,6 @@ public class MascotaDaoJdbc implements GenericDao<Mascota> {
         }
     }
 
-    /**
-     * Eliminación lógica de una mascota usando una conexión propia.
-     */
     @Override
     public void eliminar(long id) {
         try (Connection c = DatabaseConnection.getConnection()) {
@@ -162,9 +162,6 @@ public class MascotaDaoJdbc implements GenericDao<Mascota> {
         }
     }
 
-    /**
-     * Recuperación de una mascota usando una conexión propia.
-     */
     public void recuperar(long id) {
         String sql = "UPDATE mascota SET eliminado = FALSE WHERE id=?";
         try (Connection c = DatabaseConnection.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
@@ -177,37 +174,7 @@ public class MascotaDaoJdbc implements GenericDao<Mascota> {
         }
     }
 
-    // Métodos con conexión
-    /**
-     * Crear una mascota usando una conexión externa.
-     */
-    @Override
-    public Mascota crear(Mascota m, Connection c) {
-        String sql = "INSERT INTO mascota (nombre, especie, raza, fecha_nacimiento, duenio, eliminado) VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, m.getNombre());
-            ps.setString(2, m.getEspecie());
-            ps.setString(3, m.getRaza());
-            ps.setDate(4, java.sql.Date.valueOf(m.getFechaNacimiento()));
-            ps.setString(5, m.getDuenio());
-            ps.setBoolean(6, m.isEliminado());
-            ps.executeUpdate();
-
-            // Obtener el ID generado
-            try (ResultSet rs = ps.getGeneratedKeys()) {
-                if (rs.next()) {
-                    m.setId(rs.getLong(1));
-                }
-            }
-            return m;
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al insertar mascota", e);
-        }
-    }
-
-    /**
-     * Leer una mascota usando una conexión externa.
-     */
+    // Métodos con Connection
     @Override
     public Optional<Mascota> leer(long id, Connection c) {
         String sql = "SELECT * FROM mascota WHERE id = ? AND eliminado = FALSE";
@@ -236,9 +203,6 @@ public class MascotaDaoJdbc implements GenericDao<Mascota> {
         return Optional.empty();
     }
 
-    /**
-     * Listar mascotas usando una conexión externa.
-     */
     @Override
     public List<Mascota> leerTodos(Connection c) {
         List<Mascota> lista = new ArrayList<>();
@@ -265,9 +229,6 @@ public class MascotaDaoJdbc implements GenericDao<Mascota> {
         return lista;
     }
 
-    /**
-     * Eliminar logicamente una mascota usando una conexión externa.
-     */
     @Override
     public void eliminar(long id, Connection c) {
         // Primero obtenemos la mascota para ver si tiene microchip
@@ -290,9 +251,6 @@ public class MascotaDaoJdbc implements GenericDao<Mascota> {
         }
     }
 
-    /**
-     * Actualizar una mascota usando una conexión externa.
-     */
     @Override
     public void actualizar(Mascota m, Connection c) {
         String sql = "UPDATE mascota SET nombre=?, especie=?, raza=?, fecha_nacimiento=?, duenio=?, eliminado=? WHERE id=?";
@@ -311,9 +269,6 @@ public class MascotaDaoJdbc implements GenericDao<Mascota> {
         }
     }
 
-    /**
-     * Recuperar una mascota usando una conexión externa.
-     */
     public void recuperar(long id, Connection c) {
         String sql = "UPDATE mascota SET eliminado = FALSE WHERE id=?";
         try (PreparedStatement ps = c.prepareStatement(sql)) {
