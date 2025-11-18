@@ -1,8 +1,7 @@
 package service;
-
+import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
-
 import entities.Mascota;
 import entities.Microchip;
 import dao.MascotaDaoJdbc;
@@ -114,6 +113,47 @@ public class MascotaService implements GenericService<Mascota> {
         if (m.getDuenio() == null || m.getDuenio().trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre del dueño es obligatorio");
         }
+    }
+    
+    /**
+     * Metodos transaccionales, usan una Conenection externa.
+     * Se usan cuando MenuHandler maneja TransactionManager.
+     */
+
+    public Mascota insertar(Mascota m, Connection conn) throws Exception {
+        validarMascota(m);
+
+        Microchip chip = m.getMicrochip();
+        if (chip != null) {
+            if (chip.getId() == null || chip.getId() == 0L) {
+                // Usamos la versión del DAO que recibe Connection
+                chip = microchipDao.crear(chip, conn);
+                m.setMicrochip(chip);
+            } else {
+            microchipDao.actualizar(chip, conn);
+            }
+        }
+
+        return mascotaDao.crear(m, conn);
+    }
+
+    public void actualizar(Mascota m, Connection conn) throws Exception {
+        validarMascota(m);
+        if (m.getId() == null || m.getId() <= 0) {
+            throw new IllegalArgumentException("El ID de la mascota debe ser mayor a 0 para actualizar");
+        }
+
+        Microchip chip = m.getMicrochip();
+        if (chip != null) {
+            if (chip.getId() == null || chip.getId() == 0L) {
+                chip = microchipDao.crear(chip, conn);
+                m.setMicrochip(chip);
+            } else {
+                microchipDao.actualizar(chip, conn);
+            }
+        }
+
+        mascotaDao.actualizar(m, conn);
     }
 }
     

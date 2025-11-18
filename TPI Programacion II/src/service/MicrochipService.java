@@ -2,7 +2,7 @@ package service;
 
 import java.util.List;
 import java.util.Optional;
-
+import java.sql.Connection;
 import dao.MicrochipDaoJdbc;
 import entities.Microchip;
 
@@ -84,4 +84,12 @@ public class MicrochipService implements GenericService<Microchip> {
         }
         // observaciones puede ser opcional, así que no lo validamos como obligatorio
     }
+    public Microchip insertar(Microchip mc, Connection conn) throws Exception {
+        return microchipDao.crear(mc, conn);
+    }
+
+    public void actualizar(Microchip mc, Connection conn) throws Exception {
+        microchipDao.actualizar(mc, conn);
+}
+
 }
