@@ -22,7 +22,7 @@ Se desarrolló utilizando **Java**, **JDBC** y **MySQL**, aplicando:
 
 El sistema garantiza integridad de datos y consistencia entre Mascota y Microchip.
 
-
+LINK DRIVE con documento pdf y video sobre el proyecto: https://drive.google.com/drive/folders/1kXVxGjS1SyYSASpvG4AKyH9KZr27P7eO?usp=sharing
 ## 3. Arquitectura del Sistema
 
 El proyecto está organizado de acuerdo con una arquitectura multicapa, siguiendo buenas prácticas de diseño:
