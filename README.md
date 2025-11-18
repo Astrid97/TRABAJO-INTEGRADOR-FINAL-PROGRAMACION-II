@@ -6,6 +6,7 @@ ESTEFANIA AVALOS;
 ANDREA JULIA AYALA;
 ASTRID AYELEN AÑAZCO;
 
+Link Video sobre el proyecto: https://drive.google.com/file/d/1SP9vuy21ff4jdE2BvHfKYklVPyD0DQLW/view?usp=sharing
 ### Descripción del Proyecto
 
 Este Trabajo Práctico Integrador tiene como objetivo demostrar la aplicación práctica de los conceptos fundamentales de Programación Orientada a Objetos y Persistencia de Datos aprendidos durante el cursado de Programación 2. El proyecto consiste en desarrollar un sistema completo de gestión de personas y domicilios que permita realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre estas entidades, implementando una arquitectura robusta y profesional.
