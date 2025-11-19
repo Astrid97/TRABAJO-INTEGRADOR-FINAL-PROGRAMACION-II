@@ -7,6 +7,9 @@
 - **Estefanía Avalos** – Acceso a datos (DAO), JDBC  
 - **Andrea Ayala** – Configuración, Entidades, Base de Datos  
 
+### Link al drive con documento pdf y video sobre el proyecto:
+
+https://drive.google.com/drive/folders/1kXVxGjS1SyYSASpvG4AKyH9KZr27P7eO?usp=sharing
 
 ## 2. Descripción General del Proyecto
 
@@ -19,10 +22,8 @@ Se desarrolló utilizando **Java**, **JDBC** y **MySQL**, aplicando:
 - **Transacciones** con commit/rollback
 - Interfaz de consola para CRUD completo
 - Enfoque profesional con manejo de excepciones y validaciones de negocio
+- El sistema garantiza integridad de datos y consistencia entre Mascota y Microchip.
 
-El sistema garantiza integridad de datos y consistencia entre Mascota y Microchip.
-
-LINK DRIVE con documento pdf y video sobre el proyecto: https://drive.google.com/drive/folders/1kXVxGjS1SyYSASpvG4AKyH9KZr27P7eO?usp=sharing
 ## 3. Arquitectura del Sistema
 
 El proyecto está organizado de acuerdo con una arquitectura multicapa, siguiendo buenas prácticas de diseño:
