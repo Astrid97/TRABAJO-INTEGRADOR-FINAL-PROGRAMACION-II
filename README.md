@@ -185,7 +185,7 @@ Abrir el proyecto y configurar el driver JDBC.
 Desde la clase:
 
 ```
-main/AppMenu.java
+main/Main.java
 ```
 
 ## 9. Validaciones y Reglas de Negocio (resumen)
